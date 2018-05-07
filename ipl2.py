@@ -174,12 +174,16 @@ class Simulator:
         team1, team2 = self.c.fixture[CURRENT_MATCH]
         print(f"\n\n&nbsp;\n\nIf **{team1}** wins match {CURRENT_MATCH} {team1} vs {team2} : ")
         self.reset()
+        self.c.points[team1] += 2
         self.play([team1], CURRENT_MATCH + 1)
+        self.c.points[team1] -= 2
         self.print_result()
 
         print(f"\n\n&nbsp;\n\nIf **{team2}** wins match {CURRENT_MATCH} {team1} vs {team2} : ")
         self.reset()
+        self.c.points[team2] += 2
         self.play([team2], CURRENT_MATCH + 1)
+        self.c.points[team2] -= 2
         self.print_result()
 
     def play_current(self):
