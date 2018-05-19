@@ -2,7 +2,7 @@ import copy
 import operator
 import re
 
-CURRENT_MATCH = 50
+CURRENT_MATCH = 55
 
 
 class Team:
@@ -21,21 +21,21 @@ class Constants:
 
     points = {Team.CSK: 16,
               Team.SRH: 18,
-              Team.RCB: 10,
-              Team.MI: 10,
+              Team.RCB: 12,
+              Team.MI: 12,
               Team.KXIP: 12,
-              Team.DD: 6,
-              Team.KKR: 14,
-              Team.RR: 12}
+              Team.DD: 8,
+              Team.KKR: 16,
+              Team.RR: 14}
 
-    nrr = {Team.CSK: 0.383,
-           Team.SRH: 0.400,
-           Team.RCB: 0.218,
-           Team.MI: 0.405,
-           Team.KXIP: -0.518,
-           Team.DD: -0.478,
-           Team.KKR: -0.096,
-           Team.RR: -0.399}
+    nrr = {Team.CSK: 0.220,
+           Team.SRH: 0.28,
+           Team.RCB: 0.129,
+           Team.MI: 0.384,
+           Team.KXIP: -0.490,
+           Team.DD: -0.288,
+           Team.KKR: -0.07,
+           Team.RR: -0.246}
 
     adjusted_points = {}
 
@@ -253,19 +253,20 @@ class Simulator:
         for qt in sorted_table:
             team = qt[0]
             team_txt = team if team != highlight_team else "**" + team + "**"
-            top2 = 100 if self.get_percent(self.qualify_top2_counter[team]) == 100 else f"{self.get_percent(self.qualify_top2_counter[team])}-{self.get_percent(self.qualify_top2_with_nrr_counter[team])}"
-            print(f"{team_txt} | "
-                  f"{self.c.points[team]} | "
+            top2 = self.get_percent(self.qualify_top2_counter[team]) if self.get_percent(self.qualify_top2_counter[team]) == 100 or self.get_percent(self.qualify_top2_with_nrr_counter[team]) == 0 else f"{self.get_percent(self.qualify_top2_counter[team])}-{self.get_percent(self.qualify_top2_with_nrr_counter[team])}"
+            eliminated = "~~" if self.qualify_counter[team] == self.qualify_with_current_nrr_counter[team] == self.qualify_with_nrr_counter[team] == 0 else ""
+            print(f"{eliminated}{team_txt}{eliminated} | "
+                  f"{eliminated}{self.c.points[team]}{eliminated} | "
                   f"{self.get_remaining_match_count(team, match_offset)} | "
-                  f"{self.get_percent(self.qualify_counter[team])}% | "
-                  f"{self.get_percent(self.qualify_with_current_nrr_counter[team])}% | "
-                  f"{self.get_percent(self.qualify_with_nrr_counter[team])}% | "
-                  f"{top2}% | "
-                  f"^{self.qualify_counter[team]} | "
-                  f"^{self.qualify_with_current_nrr_counter[team]} | "
-                  f"^{self.qualify_with_nrr_counter[team]} | "
-                  f"^{self.qualify_top2_counter[team]} | "
-                  f"^{self.qualify_top2_with_nrr_counter[team]}")
+                  f"{eliminated}{self.get_percent(self.qualify_counter[team])}%{eliminated} | "
+                  f"{eliminated}{self.get_percent(self.qualify_with_current_nrr_counter[team])}%{eliminated} | "
+                  f"{eliminated}{self.get_percent(self.qualify_with_nrr_counter[team])}%{eliminated} | "
+                  f"{eliminated}{top2}%{eliminated} | "
+                  f"{eliminated}^{self.qualify_counter[team]}{eliminated} | "
+                  f"{eliminated}^{self.qualify_with_current_nrr_counter[team]}{eliminated} | "
+                  f"{eliminated}^{self.qualify_with_nrr_counter[team]}{eliminated} | "
+                  f"{eliminated}^{self.qualify_top2_counter[team]}{eliminated} | "
+                  f"{eliminated}^{self.qualify_top2_with_nrr_counter[team]}{eliminated}")
 
         print("\nTotal Simulations : ", self.total_counter, "\n")
 
