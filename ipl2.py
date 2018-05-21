@@ -2,7 +2,7 @@ import copy
 import operator
 import re
 
-CURRENT_MATCH = 55
+CURRENT_MATCH = 56
 
 
 class Team:
@@ -24,16 +24,16 @@ class Constants:
               Team.RCB: 12,
               Team.MI: 12,
               Team.KXIP: 12,
-              Team.DD: 8,
+              Team.DD: 10,
               Team.KKR: 16,
               Team.RR: 14}
 
     nrr = {Team.CSK: 0.220,
            Team.SRH: 0.28,
            Team.RCB: 0.129,
-           Team.MI: 0.384,
+           Team.MI: 0.32,
            Team.KXIP: -0.490,
-           Team.DD: -0.288,
+           Team.DD: -0.22,
            Team.KKR: -0.07,
            Team.RR: -0.246}
 
@@ -321,8 +321,6 @@ class Simulator:
 
 sim = Simulator()
 # sim.log_all_combo = True
-
-print("\n\n\nx-post from [prediction](https://redd.it/8h36dv)\n")
 print(f"\nPlay off qualifying probability **after match {CURRENT_MATCH - 1} : {sim.c.fixture[CURRENT_MATCH-1][0]} vs {sim.c.fixture[CURRENT_MATCH-1][1]}**\n")
 # sim.play_current(log_non_qualifying_team=Team.SRH)
 #
